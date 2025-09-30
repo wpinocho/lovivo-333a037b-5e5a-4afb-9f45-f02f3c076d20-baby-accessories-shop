@@ -5,10 +5,9 @@ import { SocialLinks } from '@/components/SocialLinks'
 import { FloatingCart } from '@/components/FloatingCart'
 import { Link } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
-import { ShoppingCart } from 'lucide-react'
+import { ShoppingCart, Heart, User } from 'lucide-react'
 import { useCartUI } from '@/components/CartProvider'
 import { useCart } from '@/contexts/CartContext'
-import { Input } from '@/components/ui/input'
 
 /**
  * EDITABLE TEMPLATE - EcommerceTemplate
@@ -41,13 +40,16 @@ export const EcommerceTemplate = ({
   const totalItems = getTotalItems()
 
   const header = (
-    <div className={`py-4 ${headerClassName}`}>
+    <div className={`py-4 bg-white border-b-2 border-pink-100 ${headerClassName}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center">
-            <Link to="/">
-              <BrandLogoLeft />
+            <Link to="/" className="flex items-center space-x-2">
+              <div className="text-3xl">👶</div>
+              <div>
+                <BrandLogoLeft />
+              </div>
             </Link>
           </div>
 
@@ -56,35 +58,53 @@ export const EcommerceTemplate = ({
             <nav className="flex space-x-6">
               <Link 
                 to="/" 
-                className="text-foreground/70 hover:text-foreground transition-colors"
+                className="text-foreground/70 hover:text-primary transition-colors font-medium"
               >
-                Home
+                Inicio
               </Link>
               <Link 
                 to="/blog" 
-                className="text-foreground/70 hover:text-foreground transition-colors"
+                className="text-foreground/70 hover:text-primary transition-colors font-medium"
               >
                 Blog
               </Link>
             </nav>
           </div>
 
-          {/* Cart */}
-          {showCart && (
+          {/* Actions */}
+          <div className="flex items-center space-x-3">
             <Button
               variant="ghost"
               size="icon"
-              onClick={openCart}
-              className="relative"
+              className="rounded-full hover:bg-baby-pink"
             >
-              <ShoppingCart className="h-5 w-5" />
-              {totalItems > 0 && (
-                <span className="absolute -top-2 -right-2 bg-primary text-primary-foreground text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
-                  {totalItems > 99 ? '99+' : totalItems}
-                </span>
-              )}
+              <Heart className="h-5 w-5 text-pink-500" />
             </Button>
-          )}
+            
+            <Button
+              variant="ghost"
+              size="icon"
+              className="rounded-full hover:bg-baby-blue"
+            >
+              <User className="h-5 w-5 text-blue-500" />
+            </Button>
+
+            {showCart && (
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={openCart}
+                className="relative rounded-full hover:bg-baby-mint"
+              >
+                <ShoppingCart className="h-5 w-5 text-green-500" />
+                {totalItems > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-primary text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center shadow-md">
+                    {totalItems > 99 ? '99+' : totalItems}
+                  </span>
+                )}
+              </Button>
+            )}
+          </div>
         </div>
 
         {/* Page Title */}
@@ -100,45 +120,88 @@ export const EcommerceTemplate = ({
   )
 
   const footer = (
-    <div className={`bg-black text-white py-12 ${footerClassName}`}>
+    <div className={`bg-gradient-to-br from-pink-50 via-blue-50 to-yellow-50 py-12 border-t-2 border-pink-100 ${footerClassName}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Brand */}
-          <div>
-            <BrandLogoLeft />
-            <p className="mt-4 text-white/70">
-              Your trusted online store
+          <div className="md:col-span-2">
+            <div className="flex items-center space-x-2 mb-4">
+              <div className="text-3xl">👶</div>
+              <BrandLogoLeft />
+            </div>
+            <p className="text-muted-foreground mb-4">
+              Tu tienda de confianza para todo lo que tu bebé necesita. Productos seguros, de calidad y con mucho amor.
             </p>
+            <SocialLinks />
           </div>
 
           {/* Links */}
           <div>
-            <h3 className="font-semibold mb-4 text-white">Links</h3>
+            <h3 className="font-bold text-foreground mb-4">Enlaces</h3>
             <div className="space-y-2">
               <Link 
                 to="/" 
-                className="block text-white/70 hover:text-white transition-colors"
+                className="block text-muted-foreground hover:text-primary transition-colors"
               >
-                Home
+                Inicio
               </Link>
               <Link 
                 to="/blog" 
-                className="block text-white/70 hover:text-white transition-colors"
+                className="block text-muted-foreground hover:text-primary transition-colors"
               >
                 Blog
               </Link>
+              <a 
+                href="#" 
+                className="block text-muted-foreground hover:text-primary transition-colors"
+              >
+                Sobre Nosotros
+              </a>
+              <a 
+                href="#" 
+                className="block text-muted-foreground hover:text-primary transition-colors"
+              >
+                Contacto
+              </a>
             </div>
           </div>
 
-          {/* Social Links */}
+          {/* Info */}
           <div>
-            <h3 className="font-semibold mb-4 text-white">Follow Us</h3>
-            <SocialLinks />
+            <h3 className="font-bold text-foreground mb-4">Información</h3>
+            <div className="space-y-2">
+              <a 
+                href="#" 
+                className="block text-muted-foreground hover:text-primary transition-colors"
+              >
+                Envíos
+              </a>
+              <a 
+                href="#" 
+                className="block text-muted-foreground hover:text-primary transition-colors"
+              >
+                Devoluciones
+              </a>
+              <a 
+                href="#" 
+                className="block text-muted-foreground hover:text-primary transition-colors"
+              >
+                Términos y Condiciones
+              </a>
+              <a 
+                href="#" 
+                className="block text-muted-foreground hover:text-primary transition-colors"
+              >
+                Privacidad
+              </a>
+            </div>
           </div>
         </div>
 
-        <div className="mt-8 pt-8 border-t border-white/20 text-center text-white/70">
-          <p>&copy; 2024 Your Store. All rights reserved.</p>
+        <div className="mt-8 pt-8 border-t border-pink-200 text-center">
+          <p className="text-muted-foreground">
+            &copy; 2024 Tienda de Bebés. Hecho con 💕 para los más pequeños.
+          </p>
         </div>
       </div>
     </div>
